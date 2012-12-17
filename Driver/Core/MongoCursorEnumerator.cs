@@ -309,6 +309,15 @@ namespace MongoDB.Driver
 
         private MongoReplyMessage<TDocument> GetFirst()
         {
+            return StaleConnection.Retry(() =>
+                                             {
+                                                 _serverInstance = null;
+                                                 return OriginalGetFirst();
+                                             });
+        }
+
+        private MongoReplyMessage<TDocument> OriginalGetFirst()
+        {
             var connection = AcquireConnection();
             try
             {

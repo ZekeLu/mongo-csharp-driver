@@ -201,6 +201,7 @@
     <Compile Include="Internal\PingTimeAggregator.cs" />
     <Compile Include="Internal\ReplicaSetInformation.cs" />
     <Compile Include="Internal\ReplicaSetMongoServerProxy.cs" />
+    <Compile Include="Internal\StaleConnection.cs" />
     <Compile Include="Linq\Expressions\ExpressionVisitorGeneric.cs" />
     <Compile Include="Linq\Utils\BsonSerializationInfoFinder.cs" />
     <Compile Include="Linq\Utils\BsonSerializationInfoHelper.cs" />

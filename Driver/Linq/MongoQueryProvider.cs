@@ -17,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 
@@ -146,41 +145,6 @@ namespace MongoDB.Driver.Linq
         /// <param name="expression">The query expression.</param>
         /// <returns>The result of the query.</returns>
         public object Execute(Expression expression)
-        {
-            try
-            {
-                return OriginalExecute(expression);
-            }
-            catch (Exception exception)
-            {
-                if(ShouldRetry(exception))
-                {
-                    return OriginalExecute(expression);
-                }
-                throw;
-            }
-        }
-
-        private static bool ShouldRetry(Exception exception)
-        {
-            var innerException = exception;
-            while (innerException != null)
-            {
-                var socketException = innerException as SocketException;
-                if (socketException != null)
-                {
-                    if (socketException.SocketErrorCode == SocketError.ConnectionReset)
-                    {
-                        return true;
-                    }
-                }
-
-                innerException = innerException.InnerException;
-            }
-            return false;
-        }
-
-        private object OriginalExecute(Expression expression)
         {
             if (expression == null)
             {
